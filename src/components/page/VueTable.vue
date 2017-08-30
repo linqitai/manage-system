@@ -87,6 +87,7 @@
             };
             axios.get(this.url).then( (res) => {
                 this.information = res.data;
+                console.log(this.information);
             })
         }
     }

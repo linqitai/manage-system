@@ -15,7 +15,7 @@
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="search">搜索</el-button>
         </div>
-        <el-table :data="data" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+        <el-table :data="data" border stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="date" label="日期" sortable width="150">
             </el-table-column>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    export default {
+   export default {
         data() {
             return {
                 url: './static/vuetable.json',
@@ -92,6 +92,7 @@
                     self.url = '/ms/table/list';
                 };
                 self.$axios.post(self.url, {page:self.cur_page}).then((res) => {
+                    console.log(res.data);
                     self.tableData = res.data.list;
                 })
             },
