@@ -55,6 +55,10 @@ export default {
           title: '表单',
           subs: [
             {
+              index: 'area',
+              title: '地区选择'
+            },
+            {
               index: 'baseform',
               title: '基本表单'
             },
