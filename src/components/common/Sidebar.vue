@@ -90,6 +90,11 @@ export default {
           title: '图表'
         },
         {
+          icon: 'el-icon-star-on',
+          index: 'basechartsTest',
+          title: '图表测试'
+        },
+        {
           icon: 'el-icon-upload2',
           index: 'drag',
           title: '拖拽'

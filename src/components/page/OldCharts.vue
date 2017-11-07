@@ -34,7 +34,7 @@
 <script>
     // import IEcharts from 'vue-echarts-v3';
     import vSchart from 'vue-schart';
-    import IEcharts from 'vue-echarts-v3/src/lite.vue';
+    // import IEcharts from 'vue-echarts-v3/src/lite.vue';
   
     import 'echarts/lib/chart/bar';
     import 'echarts/lib/chart/line';

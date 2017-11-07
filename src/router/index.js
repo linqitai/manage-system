@@ -4,6 +4,8 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
+    mode: 'hash',
+    // mode: 'history',
     routes: [
         {
             path: '/',
@@ -12,10 +14,14 @@ export default new Router({
         {
             path: '/readme',
             component: resolve => require(['../components/common/Home.vue'], resolve),
-            children:[
+            children: [
                 {
                     path: '/',
                     component: resolve => require(['../components/page/Readme.vue'], resolve)
+                },
+                {
+                    path: '/params/:id/:name',
+                    component: resolve => require(['../components/page/params.vue'], resolve)
                 },
                 {
                     path: '/area',
@@ -61,6 +67,10 @@ export default new Router({
                 {
                     path: '/basecharts',
                     component: resolve => require(['../components/page/BaseCharts.vue'], resolve)   // vue-schart组件
+                },
+                {
+                    path: '/basechartsTest',
+                    component: resolve => require(['../components/page/BaseChartsTest.vue'], resolve)   // vue-schart组件
                 },
                 {
                     path: '/drag',
