@@ -7,85 +7,112 @@
         <el-breadcrumb-item>基础图表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="schart">
-      <div class="content-title">饼状图</div>
-      <schart canvasId="pie" width="500" height="400" :data="data2" type="pie" :options="options2"></schart>
+    <div class="piewrap">
+      <div class="inner">
+        <!-- <div class="ileft" :style="['transform: rotate(' + LeftDushu + 'deg);']"></div> -->
+        <div class="ileft" :style="{transform:'rotate(' +(LeftDushu)+'deg)',WebkitTransform:'rotate(' +(LeftDushu)+'deg)'}"></div>
+        <!-- <div class="iright" :style="['transform: rotate(' + rightDushu + 'deg);']"></div> -->
+        <div class="iright" :style="{transform:'rotate(' +(rightDushu)+'deg)',WebkitTransform:'rotate(' +(rightDushu)+'deg)'}"></div>
+        <div class="masker" v-show="isShowMasker"></div>
+      </div>
     </div>
-    <!-- <div class="schart">
-                        <div class="content-title">环形图</div>
-                        <schart canvasId="ring" width="500" height="400" :data="data2" type="ring" :options="options2"></schart>
-                    </div> -->
-    <canvas ref="myCanvas" width="200px" height="150px" style="border: 1px solid red;">
-      您的浏览器不支持canvas标签。
-    </canvas>
   </div>
 </template>
 
 <script>
-import Schart from 'vue-schart';
 export default {
-  components: {
-    Schart
+  data() {
+    return {
+      isShowMasker: false,
+      use: 60000,
+      unuse: 30000,
+      LeftDushu: 0,
+      rightDushu: 0
+    }
   },
-  data: () => ({
-    data2: [
-      { name: '已提额', value: 20000 },
-      { name: '省下可提额度', value: 40000 }
-    ],
-    options2: {
-      title: '您当前已提额：20000元',
-      colorList: ['#646464','#FF4949'],
-      legendColor: '#000000',         // 图例文本颜色
-      legend: '#000000',         // 图例文本颜色
-      titleColor: '#646464',
-      fillColor: '#72f6ff'
+  created () {
+    let all = this.use + this.unuse; // 赋值2
+    let radio = this.use/all;
+    this.rightDushu = 360 * radio;
+    if(radio > 0.5) {
+      this.isShowMasker = true;
+      this.LeftDushu = this.rightDushu - 180
+      console.log(`LeftDushu:${this.LeftDushu}`)
     }
-  }),
-  created() {
-
-    //获取Canvas对象(画布)
-    var canvas = this.$refs.myCanvas;
-    //简单地检测当前浏览器是否支持Canvas对象，以免在一些不支持html5的浏览器中提示语法错误
-    if (canvas.getContext) {
-      //获取对应的CanvasRenderingContext2D对象(画笔)
-      var ctx = canvas.getContext('2d');
-
-      //开始一个新的绘制路径
-      ctx.beginPath();
-      //设置弧线的颜色为蓝色
-      ctx.strokeStyle = "blue";
-      ctx.fillStyle = '#FF0000';
-      var circle = {
-        x: 100,    //圆心的x轴坐标值
-        y: 100,    //圆心的y轴坐标值
-        r: 50      //圆的半径
-      };
-      //沿着坐标点(100,100)为圆心、半径为50px的圆的顺时针方向绘制弧线
-      ctx.arc(circle.x, circle.y, circle.r, 0, Math.PI / 2, false);
-      //按照指定的路径绘制弧线
-      ctx.lineTo(100, 100);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.fill();
-    }
-
-
+    console.log(radio)
+    console.log(all)
+    console.log(`rightDushu:${this.rightDushu}`)
   }
 }
 </script>
 
-<style scoped>
-.schart {
-  width: 600px;
-  display: inline-block;
+<style scoped lang="scss">
+$blueColor: #2D6DEB;
+$whiteColor: #ffffff;
+.piewrap {
+  position: relative;
+  .inner {
+    position: absolute;
+    width: 138px;
+    height: 138px;
+    border-radius: 140px;
+    overflow: hidden;
+    left: 13px;
+    top: 13px;
+    background-color: $blueColor;
+    border: 1px solid #c7c7c7;
+    .ileft,
+    .iright,
+    .masker {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+    }
+    .ileft {
+      left: 0;
+      top: 0;
+      background-color: $whiteColor;
+      transform-origin: right center;
+    }
+    .iright {
+      left: 50%;
+      top: 0;
+      background-color: $whiteColor;
+      // transform: rotate(190deg);
+      transform-origin: left center;
+    }
+    .masker {
+      background-color: $blueColor;
+      left: 50%;
+      top: 0;
+    }
+  }
 }
 
-.content-title {
-  clear: both;
-  font-weight: 400;
-  line-height: 50px;
-  margin: 10px 0;
-  font-size: 22px;
-  color: #1f2f3d;
+@keyframes spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes second-half-hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes second-half-show {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
